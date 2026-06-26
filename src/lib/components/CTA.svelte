@@ -143,11 +143,12 @@
   }
 
   .cta-heading {
-    font-family: "Cal Sans", sans-serif;
-    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-family: "Gabarito", sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 5.5vw, 3.8rem);
     line-height: 1.05;
     color: #ffffff;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .cta-heading .accent { color: var(--gold); }
 

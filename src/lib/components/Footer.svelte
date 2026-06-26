@@ -128,7 +128,7 @@
       © {new Date().getFullYear()} MGC Car Rental & Leasing. All rights reserved.
     </div>
     <div class="footer-legal">
-      <a href="/">Developed By Keagan Simmons</a>
+      <a href="https://www.instagram.com/simmooo32/">Developed By Keagan Simmons</a>
     </div>
   </div>
 

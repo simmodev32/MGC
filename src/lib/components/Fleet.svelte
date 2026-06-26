@@ -47,7 +47,6 @@
       <div class="car-card">
         <div class="car-image-wrap">
           <img src={car.image} alt={car.name} class="car-image" />
-          <div class="car-category">{car.category}</div>
         </div>
         <div class="car-body">
           <div class="car-meta">{car.year} · {car.transmission} · {car.seats} Seats</div>
@@ -104,9 +103,10 @@
   }
 
   .section-heading {
-    font-family: "Cal Sans", sans-serif;
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    line-height: 1.15;
+    font-family: "Gabarito", sans-serif;
+    font-weight: 600;
+    font-size: clamp(3rem, 5.5vw, 3rem);
+    line-height: 1.05;
     color: #ffffff;
   }
 

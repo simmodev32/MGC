@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import gsap from 'gsap';
   import { fleet } from '$lib/data/fleet.js';
+  import DatePicker from '$lib/components/DatePicker.svelte';
+  import TimePicker from '$lib/components/TimePicker.svelte';
 
   let copyRef = $state(null);
   let panelRef = $state(null);
@@ -48,12 +50,12 @@
     days > 0
   );
 
-let bookingFormComplete = $derived(
-  guestName.trim() !== '' &&
-  guestAge !== '' && guestAge !== null &&
-  guestEmail.trim() !== '' &&
-  permitFile !== null
-);
+  let bookingFormComplete = $derived(
+    guestName.trim() !== '' &&
+    guestAge !== '' && guestAge !== null &&
+    guestEmail.trim() !== '' &&
+    permitFile !== null
+  );
 
   function openVehicleModal() { showVehicleModal = true; }
   function closeVehicleModal() { showVehicleModal = false; }
@@ -146,14 +148,13 @@ let bookingFormComplete = $derived(
   <div class="hero-image-wrap">
     <div class="hero-bg"></div>
     <div class="hero-copy" bind:this={copyRef}>
-      <div class="hero-eyebrow">Trinidad & Tobago's Premium Fleet</div>
       <h1 class="hero-heading">
-        Drive With<br>
+        Book With<br>
         <span class="accent">Confidence.</span><br>
         Every Time.
       </h1>
       <p class="hero-sub">
-        Premium vehicles, transparent pricing, unmatched service — from booking to key return.
+        Comfortable vehicles, transparent pricing, unmatched service — from booking to key return.
       </p>
       <div class="hero-actions">
         <a href="#fleet" class="btn-primary">Browse Fleet</a>
@@ -165,8 +166,10 @@ let bookingFormComplete = $derived(
   <!-- ── BOOKING BAR ── -->
   <div class="search-bar" bind:this={panelRef}>
     <div class="search-label">Book a Vehicle</div>
+
     <div class="search-fields">
 
+      <!-- Vehicle -->
       <div class="search-field vehicle-field" role="button" tabindex="0"
         onclick={openVehicleModal}
         onkeydown={(e) => e.key === 'Enter' && openVehicleModal()}
@@ -184,30 +187,23 @@ let bookingFormComplete = $derived(
 
       <div class="field-divider"></div>
 
-      <div class="search-field">
-        <label for="pickup-date">Pickup Date</label>
-        <input type="date" id="pickup-date" bind:value={pickupDate} />
-      </div>
-
-      <div class="field-divider"></div>
-
-      <div class="search-field">
-        <label for="pickup-time">Pickup Time</label>
-        <input type="time" id="pickup-time" bind:value={pickupTime} />
-      </div>
-
-      <div class="field-divider"></div>
-
-      <div class="search-field">
-        <label for="return-date">Return Date</label>
-        <input type="date" id="return-date" bind:value={returnDate} />
-      </div>
-
-      <div class="field-divider"></div>
-
-      <div class="search-field">
-        <label for="return-time">Return Time</label>
-        <input type="time" id="return-time" bind:value={returnTime} />
+      <!-- Date/time row — wrapped for mobile grid control -->
+      <div class="date-time-row">
+        <div class="search-field">
+          <DatePicker label="Pickup Date" bind:value={pickupDate} />
+        </div>
+        <div class="field-divider vertical"></div>
+        <div class="search-field">
+          <TimePicker label="Pickup Time" bind:value={pickupTime} />
+        </div>
+        <div class="field-divider vertical"></div>
+        <div class="search-field">
+          <DatePicker label="Return Date" bind:value={returnDate} />
+        </div>
+        <div class="field-divider vertical"></div>
+        <div class="search-field">
+          <TimePicker label="Return Time" bind:value={returnTime} />
+        </div>
       </div>
 
       <button
@@ -215,9 +211,6 @@ let bookingFormComplete = $derived(
         disabled={!panelComplete}
         onclick={openBookingModal}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
-        </svg>
         Book
       </button>
 
@@ -302,7 +295,6 @@ let bookingFormComplete = $derived(
 
         <div class="booking-body">
 
-          <!-- Left: Summary -->
           <div class="booking-summary">
             <div class="summary-vehicle">
               <img src={selectedVehicle.image} alt={selectedVehicle.name} class="sv-thumb" />
@@ -342,7 +334,6 @@ let bookingFormComplete = $derived(
             </p>
           </div>
 
-          <!-- Right: Form -->
           <div class="booking-form">
             <div class="form-section-title">Your Details</div>
 
@@ -423,7 +414,7 @@ let bookingFormComplete = $derived(
   .hero-image-wrap {
     position: relative;
     width: 100%;
-    height: 88vh;
+    height: 84vh;
     min-height: 580px;
     overflow: hidden;
     padding-top: 72px;
@@ -434,9 +425,9 @@ let bookingFormComplete = $derived(
     inset: 0;
     background:
       linear-gradient(90deg,
-        rgba(10,10,10,0.88) 0%,
-        rgba(10,10,10,0.55) 50%,
-        rgba(10,10,10,0.1) 100%
+        rgba(10,10,10,0.95) 0%,
+        rgba(10,10,10,0.80) 50%,
+        rgba(10,10,10,0.4) 100%
       ),
       url('/images/hero-car.webp') center / cover no-repeat;
   }
@@ -444,34 +435,14 @@ let bookingFormComplete = $derived(
   .hero-copy {
     position: absolute;
     z-index: 2;
-    bottom: 3rem;
+    bottom: 6rem;
     left: 5vw;
     max-width: 580px;
   }
 
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 28px;
-    height: 2px;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-
   .hero-heading {
     font-family: "Cal Sans", sans-serif;
-    font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+    font-size: clamp(3rem, 5.5vw, 6rem);
     line-height: 1.0;
     color: #ffffff;
     margin-bottom: 1.2rem;
@@ -549,13 +520,14 @@ let bookingFormComplete = $derived(
     overflow: hidden;
   }
 
+  /* Vehicle field */
   .search-field {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-    padding: 0.65rem 1rem;
     flex: 1;
     min-width: 0;
+    padding: 0;
   }
 
   .search-field label {
@@ -566,33 +538,22 @@ let bookingFormComplete = $derived(
     color: var(--muted);
     white-space: nowrap;
     pointer-events: none;
+    padding: 0.65rem 1rem 0;
   }
-
-  .search-field select,
-  .search-field input {
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    padding: 0;
-  }
-  .search-field select option { background: var(--surface); }
 
   .vehicle-field {
     cursor: pointer;
     transition: background 0.15s;
+    padding: 0.65rem 1rem;
   }
+  .vehicle-field label { padding: 0; }
   .vehicle-field:hover { background: rgba(245,168,0,0.06); }
 
   .selected-vehicle {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
+    margin-top: 0.2rem;
   }
   .sv-name {
     font-size: 0.85rem;
@@ -608,9 +569,27 @@ let bookingFormComplete = $derived(
     font-size: 0.85rem;
     color: var(--muted);
     font-family: "DM Sans", sans-serif;
+    margin-top: 0.2rem;
   }
 
+  /* Vertical divider between fields */
   .field-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* Date-time row — desktop */
+  .date-time-row {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .date-time-row .search-field { flex: 1; }
+
+  .field-divider.vertical {
     width: 1px;
     height: 36px;
     background: rgba(255,255,255,0.08);
@@ -620,6 +599,7 @@ let bookingFormComplete = $derived(
   .search-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     background: var(--gold);
     color: var(--black);
@@ -1069,15 +1049,74 @@ let bookingFormComplete = $derived(
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ══ RESPONSIVE ══ */
+  /* ══ MOBILE ══ */
   @media (max-width: 1024px) {
-    .search-bar { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .search-fields { flex-wrap: wrap; }
-    .field-divider { display: none; }
-    .search-btn { width: 100%; justify-content: center; min-height: 44px; }
-    .vehicle-grid { grid-template-columns: repeat(2, 1fr); }
+    .search-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 1rem 1rem 0;
+    }
+
+    .search-label {
+      margin-bottom: 0.75rem;
+    }
+
+    .search-fields {
+      flex-direction: column;
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    /* Vehicle full width */
+    .search-field.vehicle-field {
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Hide the horizontal divider between vehicle and date-time-row */
+    .field-divider:not(.vertical) { display: none; }
+
+    /* Date-time-row becomes 2x2 grid */
+    .date-time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: unset;
+      width: 100%;
+    }
+
+    /* Hide vertical dividers inside the grid */
+    .date-time-row .field-divider.vertical { display: none; }
+
+    .date-time-row .search-field {
+      flex: unset;
+      width: 100%;
+    }
+
+    /* Right column gets left border */
+    .date-time-row .search-field:nth-child(2n) {
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Top row gets bottom border */
+    .date-time-row .search-field:nth-child(1),
+    .date-time-row .search-field:nth-child(2) {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Book button full width */
+    .search-btn {
+      width: 100%;
+      justify-content: center;
+      min-height: 4rem;
+      border-radius: 0 0 6px 6px;
+      padding: 0 1rem;
+    }
+
     .booking-body { grid-template-columns: 1fr; }
     .booking-summary { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vehicle-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 560px) {

@@ -37,16 +37,16 @@
   <div class="about-media" bind:this={imageRef}>
     <img src="/images/about-car.webp" alt="MGC fleet vehicle" />
     <div class="image-tag">
-      <span class="tag-num">12+</span>
-      <span class="tag-label">Years in Business</span>
+      <span class="tag-num">500+</span>
+      <span class="tag-label">Happy Cilents</span>
     </div>
   </div>
 
   <div class="about-content" bind:this={contentRef}>
     <div class="section-eyebrow">Who We Are</div>
-    <h2 class="section-heading">Redefining Car Rental<br>In Trinidad</h2>
+    <h2 class="section-heading">The rental buisness that<br>makes your life easier</h2>
     <p class="about-body">
-      MGC Car Rental & Leasing has been the gold standard in vehicle hire across Trinidad and Tobago for over a decade. We built our reputation on a simple premise — every client deserves a fleet they can trust, service they can rely on, and terms that are completely transparent.
+      We built our reputation on a simple premise — every client deserves a fleet they can trust, service they can rely on, and terms that are completely transparent.
     </p>
  
 
@@ -169,11 +169,12 @@
   }
 
   .section-heading {
-    font-family: "Cal Sans", sans-serif;
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    line-height: 1.15;
+    font-family: "Gabarito", sans-serif;
+    font-weight: 600;
+    font-size: clamp(3rem, 5.5vw, 3rem);
+    line-height: 1;
     color: #ffffff;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .about-body {
@@ -193,7 +194,6 @@
 
   .pillar {
     background: #191919;
-    border: 1px solid rgba(245,168,0,0.18);
     border-radius: 6px;
     padding: 1.2rem;
   }

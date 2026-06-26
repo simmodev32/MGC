@@ -14,12 +14,11 @@
 </script>
 
 <nav>
-  <a href="/" class="nav-logo"><span>MGC</span> Rentals</a>
+  <a href="/" class="nav-logo"><span>MGC</span> Mobility</a>
 
   <ul class="nav-links">
     <li><a href="#fleet">Fleet</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#why">Why Us</a></li>
     <li><a href="#testimonials">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -40,7 +39,6 @@ nav {
   background: rgba(10,10,10,0.45);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
   nav.scrolled {
@@ -52,7 +50,7 @@ nav {
 
   .nav-logo {
     font-family: "Cal Sans", sans-serif;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     letter-spacing: 0.08em;
     color: var(--white);
   }
