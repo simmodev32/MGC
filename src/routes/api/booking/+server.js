@@ -8,6 +8,7 @@ export async function POST({ request }) {
 
   const name        = formData.get('name');
   const age         = formData.get('age');
+  const phone       = formData.get('phone');
   const email       = formData.get('email');
   const vehicle     = formData.get('vehicle');
   const pickupDate  = formData.get('pickupDate');
@@ -18,7 +19,7 @@ export async function POST({ request }) {
   const days        = formData.get('days');
   const permitFile  = formData.get('permit');
 
-  if (!name || !age || !email || !vehicle || !pickupDate || !pickupTime || !returnDate || !returnTime) {
+  if (!name || !phone || !age || !email || !vehicle || !pickupDate || !pickupTime || !returnDate || !returnTime) {
     return new Response(
       JSON.stringify({ success: false, error: 'Missing required fields.' }),
       { status: 400 }
@@ -55,6 +56,7 @@ export async function POST({ request }) {
             <h2 style="color:#fff;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 16px;">Customer</h2>
             <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
               <tr><td style="padding:10px 0;border-bottom:1px solid #222;color:#888;font-size:0.85rem;width:40%;">Name</td><td style="padding:10px 0;border-bottom:1px solid #222;color:#fff;font-size:0.85rem;">${name}</td></tr>
+              <tr><td style="...color:#888...">Phone</td><td style="...color:#fff...">${phone}</td></tr>
               <tr><td style="padding:10px 0;border-bottom:1px solid #222;color:#888;font-size:0.85rem;">Age</td><td style="padding:10px 0;border-bottom:1px solid #222;color:#fff;font-size:0.85rem;">${age}</td></tr>
               <tr><td style="padding:10px 0;border-bottom:1px solid #222;color:#888;font-size:0.85rem;">Email</td><td style="padding:10px 0;border-bottom:1px solid #222;color:#fff;font-size:0.85rem;">${email}</td></tr>
               <tr><td style="padding:10px 0;color:#888;font-size:0.85rem;">Driver's Permit</td><td style="padding:10px 0;color:#F5A800;font-size:0.85rem;">${attachments.length ? 'Attached' : 'Not provided'}</td></tr>

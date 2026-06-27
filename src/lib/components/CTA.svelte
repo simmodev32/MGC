@@ -109,7 +109,7 @@
 <style>
   .cta {
     position: relative;
-    padding: 100px 5vw;
+    padding: 100px 10vw;
     background: #111111;
     overflow: hidden;
   }
@@ -206,7 +206,6 @@
   .requirements-card {
     background: #0A0A0A;
     border: 1px solid rgba(245,168,0,0.2);
-    border-top: 3px solid var(--gold);
     border-radius: 8px;
     padding: 2rem;
   }
@@ -261,5 +260,12 @@
       grid-template-columns: 1fr;
       gap: 4rem;
     }
+      .cta {
+    position: relative;
+    padding: 100px 5vw;
+    background: #111111;
+    overflow: hidden;
   }
+  }
+
 </style>

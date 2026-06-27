@@ -70,8 +70,7 @@
               TTD {car.pricePerDay.toLocaleString()}
               <span>/ day</span>
             </div>
-            <button class="car-btn">Rent Now</button>
-          </div>
+             <a href="#home" class="car-btn">Rent Now</a>          </div>
         </div>
       </div>
     {/each}
@@ -81,7 +80,7 @@
 
 <style>
   .fleet {
-    padding: 100px 5vw;
+    padding: 100px 10vw;
     background: #0A0A0A;
   }
 
@@ -279,5 +278,9 @@
 
   @media (max-width: 560px) {
     .fleet-grid { grid-template-columns: 1fr; }
+  }
+    .fleet {
+    padding: 100px 5vw;
+    background: #0A0A0A;
   }
 </style>

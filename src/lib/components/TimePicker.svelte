@@ -13,7 +13,7 @@
 
   let showModal = $state(false);
 
-  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+  const hours = Array.from({ length: 11 }, (_, i) => String(i + 8).padStart(2, '0'));
   const minutes = ['00', '15', '30', '45'];
 
   let selectedHour = $state('');
@@ -144,7 +144,6 @@
   .tp-modal {
     background: #111111;
     border: 1px solid rgba(245,168,0,0.2);
-    border-top: 3px solid #F5A800;
     border-radius: 8px;
     padding: 1.5rem;
     width: 100%;

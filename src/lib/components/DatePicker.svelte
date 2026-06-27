@@ -71,11 +71,24 @@
     return t.getFullYear() === viewYear && t.getMonth() === viewMonth && t.getDate() === day;
   }
 
-  function isPast(day) {
-    if (!day) return false;
-    const t = new Date(); t.setHours(0,0,0,0);
-    return new Date(viewYear, viewMonth, day) < t;
-  }
+function isPast(day) {
+  if (!day) return false;
+  const now = new Date();
+  const selected = new Date(viewYear, viewMonth, day);
+  
+  // If today and time is after 4pm, disable today
+  const isToday = 
+    now.getFullYear() === viewYear &&
+    now.getMonth() === viewMonth &&
+    now.getDate() === day;
+  
+  if (isToday && now.getHours() >= 16) return true;
+  
+  // Disable all past dates
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return selected < today;
+}
 </script>
 
 <!-- Trigger -->
@@ -190,7 +203,6 @@
   .dp-modal {
     background: #111111;
     border: 1px solid rgba(245,168,0,0.2);
-    border-top: 3px solid #F5A800;
     border-radius: 8px;
     padding: 1.5rem;
     width: 100%;

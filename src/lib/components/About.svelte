@@ -44,7 +44,7 @@
 
   <div class="about-content" bind:this={contentRef}>
     <div class="section-eyebrow">Who We Are</div>
-    <h2 class="section-heading">The rental buisness that<br>makes your life easier</h2>
+    <h2 class="section-heading">The rental business that<br>makes your life easier</h2>
     <p class="about-body">
       We built our reputation on a simple premise — every client deserves a fleet they can trust, service they can rely on, and terms that are completely transparent.
     </p>
@@ -99,7 +99,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 6vw;
     align-items: center;
-    padding: 100px 5vw;
+    padding: 100px 10vw;
     background: #111111;
   }
 
@@ -230,6 +230,7 @@
     .about {
       grid-template-columns: 1fr;
       gap: 3rem;
+      padding: 16vh 5vw;
     }
     .about-media img { height: 360px; }
     .image-tag { right: 1rem; }

@@ -21,6 +21,7 @@
 
   // ── BOOKING FORM ──
   let guestName     = $state('');
+  let guestPhone = $state('');
   let guestAge      = $state('');
   let guestEmail    = $state('');
   let permitFile    = $state(null);
@@ -54,6 +55,7 @@
     guestName.trim() !== '' &&
     guestAge !== '' && guestAge !== null &&
     guestEmail.trim() !== '' &&
+    guestPhone.trim() !== '' &&
     permitFile !== null
   );
 
@@ -94,6 +96,7 @@
     const fd = new FormData();
     fd.append('name',       guestName);
     fd.append('age',        guestAge);
+    fd.append('phone',      guestPhone)
     fd.append('email',      guestEmail);
     fd.append('vehicle',    selectedVehicle.name);
     fd.append('pickupDate', pickupDate);
@@ -143,76 +146,86 @@
 <!-- ══════════════════════════════════════════ -->
 <!-- HERO                                       -->
 <!-- ══════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════ -->
+<!-- HERO                                       -->
+<!-- ══════════════════════════════════════════ -->
 <section class="hero" id="home">
 
   <div class="hero-image-wrap">
-    <div class="hero-bg"></div>
-    <div class="hero-copy" bind:this={copyRef}>
-      <h1 class="hero-heading">
-        Book With<br>
-        <span class="accent">Confidence.</span><br>
-        Every Time.
-      </h1>
-      <p class="hero-sub">
-        Comfortable vehicles, transparent pricing, unmatched service — from booking to key return.
-      </p>
-      <div class="hero-actions">
-        <a href="#fleet" class="btn-primary">Browse Fleet</a>
-        <a href="#contact" class="btn-ghost">Make Enquiry</a>
-      </div>
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
     </div>
-  </div>
 
-  <!-- ── BOOKING BAR ── -->
-  <div class="search-bar" bind:this={panelRef}>
-    <div class="search-label">Book a Vehicle</div>
+    <div class="hero-content">
 
-    <div class="search-fields">
+      <!-- Left: Copy -->
+      <div class="hero-copy" bind:this={copyRef}>
+        <h1 class="hero-heading">
+          Smooth Roads<br>
+          Start With the<br>
+          <span class="accent">Right Ride.</span>
+        </h1>
+        <p class="hero-sub">
+          Comfortable vehicles, transparent pricing, unmatched service — from booking to key return.
+        </p>
+        <div class="hero-actions">
+          <a href="#fleet" class="btn-primary">Browse Fleet</a>
+          <a href="#contact" class="btn-ghost">Make Enquiry</a>
+        </div>
+      </div>
 
-      <!-- Vehicle -->
-      <div class="search-field vehicle-field" role="button" tabindex="0"
-        onclick={openVehicleModal}
-        onkeydown={(e) => e.key === 'Enter' && openVehicleModal()}
-      >
-        <label>Vehicle</label>
-        {#if selectedVehicle}
-          <div class="selected-vehicle">
-            <span class="sv-name">{selectedVehicle.name}</span>
-            <span class="sv-price">TTD {selectedVehicle.pricePerDay}/day</span>
+      <!-- Right: Booking Panel -->
+      <div class="hero-panel" bind:this={panelRef}>
+        <div class="panel-label">Book a Vehicle</div>
+
+        <!-- Vehicle selector — kept as working div from original -->
+        <div class="search-field vehicle-field" role="button" tabindex="0"
+          onclick={openVehicleModal}
+          onkeydown={(e) => e.key === 'Enter' && openVehicleModal()}
+        >
+          <label>Vehicle</label>
+          {#if selectedVehicle}
+            <div class="selected-vehicle">
+              <span class="sv-name">{selectedVehicle.name}</span>
+              <span class="sv-price">TTD {selectedVehicle.pricePerDay}/day</span>
+            </div>
+          {:else}
+            <span class="field-placeholder">Select vehicle</span>
+          {/if}
+        </div>
+
+        <div class="panel-divider"></div>
+
+        <div class="panel-row">
+          <div class="panel-field-wrap">
+            <DatePicker label="Pickup Date" bind:value={pickupDate} />
           </div>
-        {:else}
-          <span class="field-placeholder">Select vehicle</span>
-        {/if}
+          <div class="panel-field-wrap">
+            <TimePicker label="Pickup Time" bind:value={pickupTime} />
+          </div>
+        </div>
+
+        <div class="panel-divider"></div>
+
+        <div class="panel-row">
+          <div class="panel-field-wrap">
+            <DatePicker label="Return Date" bind:value={returnDate} />
+          </div>
+          <div class="panel-field-wrap">
+            <TimePicker label="Return Time" bind:value={returnTime} />
+          </div>
+        </div>
+
+        <div class="panel-divider"></div>
+
+        <button
+          class="panel-btn"
+          disabled={!panelComplete}
+          onclick={openBookingModal}
+        >
+          Book Now
+        </button>
       </div>
-
-      <div class="field-divider"></div>
-
-      <!-- Date/time row — wrapped for mobile grid control -->
-      <div class="date-time-row">
-        <div class="search-field">
-          <DatePicker label="Pickup Date" bind:value={pickupDate} />
-        </div>
-        <div class="field-divider vertical"></div>
-        <div class="search-field">
-          <TimePicker label="Pickup Time" bind:value={pickupTime} />
-        </div>
-        <div class="field-divider vertical"></div>
-        <div class="search-field">
-          <DatePicker label="Return Date" bind:value={returnDate} />
-        </div>
-        <div class="field-divider vertical"></div>
-        <div class="search-field">
-          <TimePicker label="Return Time" bind:value={returnTime} />
-        </div>
-      </div>
-
-      <button
-        class="search-btn"
-        disabled={!panelComplete}
-        onclick={openBookingModal}
-      >
-        Book
-      </button>
 
     </div>
   </div>
@@ -342,6 +355,11 @@
               <input id="b-name" type="text" placeholder="John Smith" bind:value={guestName} />
             </div>
 
+            <div class="bform-field">
+              <label for="b-phone">Phone Number *</label>
+              <input id="b-phone" type="tel" placeholder="(868) 000-0000" bind:value={guestPhone} />
+            </div>
+
             <div class="bform-row">
               <div class="bform-field">
                 <label for="b-age">Age *</label>
@@ -409,43 +427,57 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
+    overflow: hidden;
   }
 
   .hero-image-wrap {
     position: relative;
     width: 100%;
-    height: 84vh;
-    min-height: 580px;
-    overflow: hidden;
-    padding-top: 72px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
   }
 
   .hero-bg {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(90deg,
-        rgba(10,10,10,0.95) 0%,
-        rgba(10,10,10,0.80) 50%,
-        rgba(10,10,10,0.4) 100%
-      ),
-      url('/images/hero-car.webp') center / cover no-repeat;
+    background: #0A0A0A;
+    z-index: 0;
   }
 
-  .hero-copy {
+  .hero-grid {
     position: absolute;
-    z-index: 2;
-    bottom: 6rem;
-    left: 5vw;
-    max-width: 580px;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 70%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 50% 50% at 45% 53%, #000 30%, transparent 75%);
   }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 5vw;
+    align-items: center;
+    width: 100%;
+    padding: 0 10vw;
+    padding-top: 72px;
+    padding-bottom: 4rem;
+  }
+
+  /* ── COPY ── */
+  .hero-copy { max-width: 560px; }
 
   .hero-heading {
-    font-family: "Cal Sans", sans-serif;
-    font-size: clamp(3rem, 5.5vw, 6rem);
-    line-height: 1.0;
+    font-family: "Atkinson Hyperlegible Next", sans-serif;
+    font-size: clamp(2.8rem, 5vw, 5.5rem);
+    line-height: 1.05;
     color: #ffffff;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
   }
   .hero-heading .accent { color: var(--gold); }
 
@@ -490,133 +522,130 @@
   }
   .btn-ghost:hover { border-color: #ffffff; }
 
-  /* ══ SEARCH BAR ══ */
-  .search-bar {
-    background: var(--surface);
-    border-top: 3px solid var(--gold);
-    padding: 1.4rem 5vw;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .search-label {
-    font-family: "Cal Sans", sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #ffffff;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .search-fields {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    background: var(--surface-2);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  /* Vehicle field */
-  .search-field {
+  /* ── BOOKING PANEL ── */
+  .hero-panel {
+    background: rgba(17,17,17,0.92);
+    border: 1.4px solid var(--gold);
+    border-radius: 8px;
+    padding: 2rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    flex: 1;
-    min-width: 0;
-    padding: 0;
+    gap: 0;
+    width: 100%;
   }
 
-  .search-field label {
+  .panel-label {
+    font-family: "Cal Sans", sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .search-field.vehicle-field {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    transition: opacity 0.15s;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-left: 1px solid rgba(255,255,255,0.06);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+  }
+  .search-field.vehicle-field:hover { 
+   background: rgba(131, 94, 14, 0.1); 
+   }
+  
+
+  .search-field.vehicle-field label {
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
-    white-space: nowrap;
+    display: block;
+    margin-bottom: 0.3rem;
     pointer-events: none;
-    padding: 0.65rem 1rem 0;
+    
   }
-
-  .vehicle-field {
-    cursor: pointer;
-    transition: background 0.15s;
-    padding: 0.65rem 1rem;
-  }
-  .vehicle-field label { padding: 0; }
-  .vehicle-field:hover { background: rgba(245,168,0,0.06); }
 
   .selected-vehicle {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    margin-top: 0.2rem;
+    
   }
   .sv-name {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #ffffff;
     font-family: "DM Sans", sans-serif;
   }
   .sv-price {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     color: var(--gold);
   }
 
   .field-placeholder {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--muted);
     font-family: "DM Sans", sans-serif;
-    margin-top: 0.2rem;
   }
 
-  /* Vertical divider between fields */
-  .field-divider {
-    width: 1px;
-    height: 36px;
-    background: rgba(255,255,255,0.08);
-    flex-shrink: 0;
+  .panel-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
   }
 
-  /* Date-time row — desktop */
-  .date-time-row {
+  .panel-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .panel-field-wrap {
     display: flex;
-    align-items: center;
-    flex: 1;
+    flex-direction: column;
+  }
+  .panel-field-wrap:first-child {
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-left: 1px solid rgba(255,255,255,0.06);
+
   }
 
-  .date-time-row .search-field { flex: 1; }
+    .panel-field-wrap:last-child {
+      border-right: 1px solid rgba(255,255,255,0.06);
 
-  .field-divider.vertical {
-    width: 1px;
-    height: 36px;
-    background: rgba(255,255,255,0.08);
-    flex-shrink: 0;
-  }
+    }
 
-  .search-btn {
+  .panel-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    width: 100%;
     background: var(--gold);
     color: var(--black);
     font-family: "Cal Sans", sans-serif;
-    font-size: 0.82rem;
-    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0 1.8rem;
+    padding: 0.9rem;
     border: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+
     cursor: pointer;
-    height: 100%;
-    min-height: 52px;
-    flex-shrink: 0;
     transition: background 0.2s, opacity 0.2s;
   }
-  .search-btn:hover:not(:disabled) { background: var(--gold-dim); }
-  .search-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .panel-btn:hover:not(:disabled) { background: var(--gold-dim); }
+  .panel-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
   /* ══ MODAL SHARED ══ */
   .modal-backdrop {
@@ -624,7 +653,7 @@
     inset: 0;
     background: rgba(0,0,0,0.75);
     backdrop-filter: blur(4px);
-    z-index: 200;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -633,8 +662,6 @@
 
   .modal {
     background: #111111;
-    border: 1px solid rgba(245,168,0,0.2);
-    border-top: 3px solid var(--gold);
     border-radius: 8px;
     width: 100%;
     max-height: 90vh;
@@ -1049,81 +1076,135 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ══ MOBILE ══ */
+  /* ══ RESPONSIVE ══ */
+
+  /* Tablet — stack copy above panel */
   @media (max-width: 1024px) {
-    .search-bar {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: 1rem 1rem 0;
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: calc(72px + 2rem) 5vw 3rem;
+      align-items: start;
     }
 
-    .search-label {
-      margin-bottom: 0.75rem;
+    .hero-copy { max-width: 100%; }
+    .hero-sub { max-width: 100%; }
+
+    .hero-panel {
+      border-left: 1px solid rgba(245,168,0,0.18);
+      border-top: 3px solid var(--gold);
     }
 
-    .search-fields {
-      flex-direction: column;
-      width: 100%;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    /* Vehicle full width */
-    .search-field.vehicle-field {
-      width: 100%;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    /* Hide the horizontal divider between vehicle and date-time-row */
-    .field-divider:not(.vertical) { display: none; }
-
-    /* Date-time-row becomes 2x2 grid */
-    .date-time-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      flex: unset;
-      width: 100%;
-    }
-
-    /* Hide vertical dividers inside the grid */
-    .date-time-row .field-divider.vertical { display: none; }
-
-    .date-time-row .search-field {
-      flex: unset;
-      width: 100%;
-    }
-
-    /* Right column gets left border */
-    .date-time-row .search-field:nth-child(2n) {
-      border-left: 1px solid rgba(255,255,255,0.08);
-    }
-
-    /* Top row gets bottom border */
-    .date-time-row .search-field:nth-child(1),
-    .date-time-row .search-field:nth-child(2) {
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    /* Book button full width */
-    .search-btn {
-      width: 100%;
-      justify-content: center;
-      min-height: 4rem;
-      border-radius: 0 0 6px 6px;
-      padding: 0 1rem;
-    }
+    .panel-row { grid-template-columns: 1fr 1fr; }
 
     .booking-body { grid-template-columns: 1fr; }
-    .booking-summary { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .booking-summary {
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
     .vehicle-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  @media (max-width: 560px) {
-    .hero-image-wrap { height: 75vh; }
-    .vehicle-grid { grid-template-columns: 1fr; }
+  /* Phone — 480px and below */
+  @media (max-width: 480px) {
+    .hero-image-wrap { min-height: auto; }
+
+    @media (max-width: 480px) {
+  .hero-grid {
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 60% 30%, #000 40%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 25% at 50% 28%, #000 50%, transparent 75%);
+  }
+}
+
+    .hero-content {
+      padding: calc(72px + 1.5rem) 1.25rem 2rem;
+      gap: 2rem;
+      margin-top: 3rem;
+      align-items: center;
+    }
+
+    .hero-heading {
+      font-size: clamp(2.2rem, 9vw, 2.8rem);
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .hero-sub { 
+      font-size: 0.9rem; 
+      text-align: center;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      width: 100%;
+      justify-content: center;
+      padding: 0.9rem 1rem;
+      display: none
+    }
+
+    .btn-ghost {
+      display: none;
+    }
+    .hero-panel {
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border: .7px solid var(--gold);
+    }
+
+    .panel-label { font-size: 1.2rem; margin-bottom: 1.4rem; }
+
+    /* Stack date/time rows on phone */
+    .panel-row { grid-template-columns: 1fr; }
+    .panel-field-wrap:first-child {
+      border-right: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .panel-field-wrap:last-child {
+      border-right: 1px solid rgba(255,255,255,0.06);
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .panel-btn { padding: 0.85rem; font-size: 1rem; }
+
+    /* Modals slide up from bottom on phone */
+    .modal-backdrop {
+      padding: 0;
+      align-items: flex-end;
+    }
+    .modal {
+      border-radius: 16px 16px 0 0;
+      max-height: 92vh;
+    }
+    .modal-header { padding: 1.5rem 1.25rem 1rem; }
+
+    /* Vehicle grid single column */
+    .vehicle-grid {
+      grid-template-columns: 1fr;
+      padding: 1rem 1.25rem 1.5rem;
+      gap: 0.75rem;
+    }
+
+    /* Booking modal stacked */
+    .booking-body { grid-template-columns: 1fr; }
+    .booking-summary {
+      padding: 1.25rem;
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .booking-form { padding: 1.25rem; }
+
     .bform-row { grid-template-columns: 1fr; }
-    .modal-backdrop { padding: 0; align-items: flex-end; }
-    .modal { border-radius: 12px 12px 0 0; max-height: 95vh; }
+
+    .summary-vehicle { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .sv-thumb { width: 100%; height: 140px; }
+
+    .booking-success { padding: 2.5rem 1.25rem; }
   }
 </style>

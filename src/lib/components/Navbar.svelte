@@ -14,8 +14,9 @@
 </script>
 
 <nav>
-  <a href="/" class="nav-logo"><span>MGC</span> Mobility</a>
-
+<a href="/" class="nav-logo">
+  <img src="/images/logo.jpg" alt="MGC Car Rental & Leasing" class="logo-img" />
+</a>
   <ul class="nav-links">
     <li><a href="#fleet">Fleet</a></li>
     <li><a href="#about">About</a></li>
@@ -34,27 +35,23 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5vw;
+  padding: 0 10vw;
   height: 72px;
-  background: rgba(10,10,10,0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: black;
+
 }
 
-  nav.scrolled {
-    background: rgba(10,10,10,0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom-color: var(--border);
-  }
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
 
-  .nav-logo {
-    font-family: "Cal Sans", sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.08em;
-    color: var(--white);
-  }
-  .nav-logo span { color: var(--gold); }
+.logo-img {
+  height: 3.4rem;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
 
   .nav-links {
     display: flex;
@@ -86,5 +83,25 @@ nav {
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
+
+    nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 5rem;
+    background: black;
+
   }
+
+  .nav-logo {
+  display: flex;
+  height: .5rem;
+}
+  }
+
+
 </style>
